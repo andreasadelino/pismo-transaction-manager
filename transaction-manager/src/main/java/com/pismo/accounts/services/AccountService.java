@@ -5,6 +5,7 @@ import com.pismo.accounts.repositories.AccountRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.ws.rs.BadRequestException;
 
 @ApplicationScoped
 public class AccountService {
@@ -14,7 +15,18 @@ public class AccountService {
 
     @Transactional
     public void createAccount(Account account) {
-        // Todo - validate if document exists before save
+        if (accountExists(account)) {
+            throw new BadRequestException("Invalid request.");
+        }
         accountRepository.persist(account);
     }
+
+    private boolean accountExists(Account account) {
+        return accountRepository.count("documentNumber = ?1", account.documentNumber) > 0;
+    }
+
+    public Account getById(Long accountId) {
+        return accountRepository.findById(accountId);
+    }
+
 }
