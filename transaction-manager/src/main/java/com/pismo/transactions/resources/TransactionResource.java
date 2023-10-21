@@ -17,4 +17,5 @@ public class TransactionResource {
     public void process(@Valid TransactionDTO transaction) {
         transactionService.processTransaction(transaction);
     }
+
 }
