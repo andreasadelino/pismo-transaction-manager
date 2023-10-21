@@ -1,4 +1,4 @@
-package com.pismo.commom;
+package com.pismo.commom.exceptions;
 
 import jakarta.validation.ConstraintViolationException;
 import jakarta.ws.rs.core.MediaType;
@@ -14,7 +14,7 @@ public class ConstraintExceptionMapper implements ExceptionMapper<ConstraintViol
 
     @Override
     public Response toResponse(ConstraintViolationException exception) {
-        return Response.status(Response.Status.BAD_REQUEST)
+        return Response
                 .status(Response.Status.BAD_REQUEST)
                 .type(MediaType.APPLICATION_JSON)
                 .entity(prepareMessage(exception))
@@ -27,6 +27,5 @@ public class ConstraintExceptionMapper implements ExceptionMapper<ConstraintViol
                 .stream()
                 .map(cv -> new ConstraintError(cv.getMessage()))
                 .collect(Collectors.toList());
-
     }
 }

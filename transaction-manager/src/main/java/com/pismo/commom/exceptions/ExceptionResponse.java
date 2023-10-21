@@ -1,4 +1,4 @@
-package com.pismo.commom;
+package com.pismo.commom.exceptions;
 
 public record ExceptionResponse(String message) {
 }

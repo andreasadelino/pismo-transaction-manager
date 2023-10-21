@@ -1,4 +1,4 @@
-package com.pismo.commom;
+package com.pismo.commom.exceptions;
 
 import io.quarkus.logging.Log;
 import jakarta.ws.rs.core.Response;
