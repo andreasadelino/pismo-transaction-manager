@@ -13,7 +13,7 @@ public class DefaultExceptionMapper implements ExceptionMapper<Exception> {
         Log.error("Error when processing", e);
         return Response
                 .serverError()
-                .entity(e.getMessage())
+                .entity("Internal server error.")
                 .build();
     }
 }

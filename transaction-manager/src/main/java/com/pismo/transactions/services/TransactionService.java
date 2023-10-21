@@ -32,7 +32,11 @@ public class TransactionService {
         final var operation = getOperationType(transaction);
         final var account = getAccount(transaction);
 
-        final var newTransaction = new Transaction(account, operation, transaction.amount);
+        final var newTransaction = new Transaction(
+                account,
+                operation,
+                transaction.amount * OperationTypes.operationMultiplier(transaction.operationTypeId)
+        );
 
         transactionRepository.persist(newTransaction);
     }

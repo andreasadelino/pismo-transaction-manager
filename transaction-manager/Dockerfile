@@ -81,16 +81,6 @@ FROM registry.access.redhat.com/ubi8/openjdk-17:1.16
 
 ENV LANGUAGE='en_US:en'
 
-# Preparing build
-
-#WORKDIR /usr/src/app
-#
-#COPY mvnw .
-#COPY mvnw.cmd .
-#COPY . .
-#
-#RUN ./mvnw package
-
 # We make four distinct layers so if there are application changes the library layers can be re-used
 COPY --chown=185 target/quarkus-app/lib/ /deployments/lib/
 COPY --chown=185 target/quarkus-app/*.jar /deployments/

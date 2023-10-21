@@ -1,4 +1,4 @@
-version: '3'
+version: "3.5"
 
 services:
   db:
@@ -10,7 +10,7 @@ services:
       POSTGRES_PASSWORD: quarkus
       POSTGRES_DB: transactions
     ports:
-      - "60399:5432"
+      - "5433:5432"
     volumes:
       - ./db-postgres/db:/var/lib/postgresql/data
       - ./db-postgres/import:/import
@@ -18,14 +18,15 @@ services:
       - transaction-manager
 
   backend:
+    container_name: transaction-manager-backend
     image: quarkus/transaction-manager-jvm
     restart: unless-stopped
     environment:
-      QUARKUS_DATASOURCE_JDBC_URL: jdbc:postgresql://db:5432/db
-      QUARKUS_DATASOURCE_USERNAME: app
-      QUARKUS_DATASOURCE_PASSWORD: app
+      QUARKUS_DATASOURCE_JDBC_URL: jdbc:postgresql://host.docker.internal:5433/transactions
+      QUARKUS_DATASOURCE_USERNAME: quarkus
+      QUARKUS_DATASOURCE_PASSWORD: quarkus
     ports:
-      - "9091:8080"
+      - "9092:8080"
     depends_on:
       - db
     networks:
@@ -34,4 +35,5 @@ services:
 
 networks:
   transaction-manager:
+    name: transaction-manager-network
     driver: bridge

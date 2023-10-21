@@ -23,10 +23,11 @@ public class Transaction extends PanacheEntity {
     @ManyToOne
     public OperationType operationType;
 
+    @Column(nullable = false)
     public double amount;
 
     @CreationTimestamp(source = SourceType.VM)
-    @Column(name = "event_date")
+    @Column(name = "event_date", nullable = false)
     public LocalDateTime eventDate;
 
     public Transaction() {
