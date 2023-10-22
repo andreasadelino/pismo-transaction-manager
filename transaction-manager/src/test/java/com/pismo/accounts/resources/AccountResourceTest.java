@@ -96,7 +96,5 @@ public class AccountResourceTest {
             .get("/accounts/" + 99)
             .then()
             .statusCode(Response.Status.NOT_FOUND.getStatusCode());
-//            .body("account_id", is(testAccount.id.intValue()))
-//            .body("document_number", is(testAccount.documentNumber));
     }
 }

@@ -16,4 +16,10 @@ public class TransactionDTO {
     @Min(value = 0, message = "'amount' can't be negative.")
     @NotNull(message = "'amount' can't be null.")
     public double amount;
+
+    public TransactionDTO(Long accountId, Long operationTypeId, double amount) {
+        this.accountId = accountId;
+        this.operationTypeId = operationTypeId;
+        this.amount = amount;
+    }
 }

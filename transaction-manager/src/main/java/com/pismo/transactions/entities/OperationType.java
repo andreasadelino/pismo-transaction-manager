@@ -9,4 +9,7 @@ import org.hibernate.annotations.Immutable;
 public class OperationType extends PanacheEntity {
 
     public String description;
+
+    public OperationType() {
+    }
 }
