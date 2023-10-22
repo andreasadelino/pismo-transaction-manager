@@ -1,5 +1,6 @@
 package com.pismo.commom.exceptions;
 
+import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -15,17 +16,17 @@ public class ConstraintExceptionMapper implements ExceptionMapper<ConstraintViol
     @Override
     public Response toResponse(ConstraintViolationException exception) {
         return Response
-                .status(Response.Status.BAD_REQUEST)
-                .type(MediaType.APPLICATION_JSON)
-                .entity(prepareMessage(exception))
-                .build();
+            .status(Response.Status.BAD_REQUEST)
+            .type(MediaType.APPLICATION_JSON)
+            .entity(new ExceptionResponse(prepareMessage(exception)))
+            .build();
     }
 
-    private List<ConstraintError> prepareMessage(ConstraintViolationException exception) {
+    private List<String> prepareMessage(ConstraintViolationException exception) {
         return exception
-                .getConstraintViolations()
-                .stream()
-                .map(cv -> new ConstraintError(cv.getMessage()))
-                .collect(Collectors.toList());
+            .getConstraintViolations()
+            .stream()
+            .map(ConstraintViolation::getMessage)
+            .collect(Collectors.toList());
     }
 }

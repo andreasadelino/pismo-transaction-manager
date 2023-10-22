@@ -2,10 +2,10 @@ package com.pismo.accounts.services;
 
 import com.pismo.accounts.entities.Account;
 import com.pismo.accounts.repositories.AccountRepository;
+import com.pismo.commom.exceptions.RequestValidationException;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
-import jakarta.ws.rs.BadRequestException;
 
 @ApplicationScoped
 public class AccountService {
@@ -16,7 +16,7 @@ public class AccountService {
     @Transactional
     public void createAccount(Account account) {
         if (accountExists(account)) {
-            throw new BadRequestException("Invalid request.");
+            throw new RequestValidationException("Invalid request.");
         }
         accountRepository.persist(account);
     }

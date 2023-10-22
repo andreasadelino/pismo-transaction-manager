@@ -26,10 +26,15 @@ public class AccountResource {
     @Path("/{accountId}")
     @GET
     public Response getAccount(
-            @NotNull
-            @PathParam(value = "accountId")
-            Long accountId
+        @NotNull
+        @PathParam(value = "accountId")
+        Long accountId
     ) {
-        return Response.ok(accountService.getById(accountId)).build();
+        
+        final Account account = accountService.getById(accountId);
+        if (account == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        return Response.ok(account).build();
     }
 }
