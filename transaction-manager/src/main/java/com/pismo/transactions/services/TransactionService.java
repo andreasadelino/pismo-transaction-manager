@@ -13,6 +13,8 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 
+import static com.pismo.transactions.enums.OperationTypes.operationMultiplier;
+
 @ApplicationScoped
 public class TransactionService {
 
@@ -35,10 +37,17 @@ public class TransactionService {
         final var newTransaction = new Transaction(
                 account,
                 operation,
-                transaction.amount * OperationTypes.operationMultiplier(transaction.operationTypeId)
+                transaction.amount * operationMultiplier(transaction.operationTypeId)
         );
 
         transactionRepository.persist(newTransaction);
+    }
+
+    private OperationType getOperationType(TransactionDTO transaction) {
+        if (!OperationTypes.isValidId(transaction.operationTypeId)) {
+            throw new RequestValidationException(INVALID_REQUEST + ": Operation Type does not exist.");
+        }
+        return operationTypeRepository.findById(transaction.operationTypeId);
     }
 
     private Account getAccount(TransactionDTO transaction) {
@@ -47,12 +56,5 @@ public class TransactionService {
             throw new RequestValidationException(INVALID_REQUEST + ": Account does not exist.");
         }
         return account;
-    }
-
-    private OperationType getOperationType(TransactionDTO transaction) {
-        if (!OperationTypes.isValidId(transaction.operationTypeId)) {
-            throw new RequestValidationException(INVALID_REQUEST + ": Operation Type does not exist.");
-        }
-        return operationTypeRepository.findById(transaction.operationTypeId);
     }
 }

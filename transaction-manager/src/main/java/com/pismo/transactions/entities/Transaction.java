@@ -6,6 +6,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Immutable;
 import org.hibernate.annotations.SourceType;
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
 
 @Immutable
 @Entity
+@Table(name = "transaction")
 public class Transaction extends PanacheEntity {
 
     @ManyToOne

@@ -30,8 +30,8 @@ public class AccountResource {
         @PathParam(value = "accountId")
         Long accountId
     ) {
-        
         final Account account = accountService.getById(accountId);
+
         if (account == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }

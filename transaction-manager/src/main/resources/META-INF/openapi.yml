@@ -1,0 +1,86 @@
+---
+openapi: 3.0.3
+info:
+  title: transaction-manager API
+  description: API endpoints to manage account transactions.
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.1
+paths:
+  /accounts:
+    post:
+      tags:
+        - Account Resource
+      summary: Create an account with an unique document_number.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Account'
+      responses:
+        "200":
+          description: OK
+  /accounts/{accountId}:
+    get:
+      tags:
+        - Account Resource
+      summary: Retrieve account information.
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            format: int64
+            type: integer
+      responses:
+        "200":
+          description: OK
+  /transactions:
+    post:
+      tags:
+        - Transaction Resource
+      summary: Create a transaction for the account.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionDTO'
+      responses:
+        "200":
+          description: OK
+components:
+  schemas:
+    Account:
+      required:
+        - document_number
+      type: object
+      properties:
+        account_id:
+          format: int64
+          type: integer
+        document_number:
+          maxLength: 11
+          type: string
+    TransactionDTO:
+      required:
+        - account_id
+        - operation_type_id
+        - amount
+      type: object
+      properties:
+        account_id:
+          format: int64
+          type: integer
+        operation_type_id:
+          format: int64
+          type: integer
+        amount:
+          format: double
+          minimum: 0
+          type: number
+  securitySchemes:
+    SecurityScheme:
+      type: http
+      description: Authentication
+      scheme: basic

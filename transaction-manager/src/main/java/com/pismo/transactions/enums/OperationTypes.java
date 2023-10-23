@@ -4,22 +4,20 @@ import java.util.Arrays;
 
 public enum OperationTypes {
 
-    CASH_PURCHASE(1L, "CASH PURCHASE", 1, false),
-    INSTALLMENT_PURCHASE(2L, "INSTALLMENT PURCHASE", 1, false),
-    WITHDRAWAL(3L, "WITHDRAWAL", -1, true),
-    PAYMENT(4L, "PAYMENT", -1, true),
+    CASH_PURCHASE(1L, "CASH PURCHASE", 1),
+    INSTALLMENT_PURCHASE(2L, "INSTALLMENT PURCHASE", 1),
+    WITHDRAWAL(3L, "WITHDRAWAL", -1),
+    PAYMENT(4L, "PAYMENT", -1),
     ;
 
     public final Long id;
     public final String name;
     public final int multiplier;
-    public final Boolean negativeOperation;
 
-    OperationTypes(Long id, String name, int multiplier, Boolean negativeOperation) {
+    OperationTypes(Long id, String name, int multiplier) {
         this.id = id;
         this.name = name;
         this.multiplier = multiplier;
-        this.negativeOperation = negativeOperation;
     }
 
     public static Boolean isValidId(Long id) {
@@ -36,7 +34,6 @@ public enum OperationTypes {
                 .findFirst()
                 .orElseThrow();
 
-//        return operationType.negativeOperation ? -1 : 1;
         return operationType.multiplier;
     }
 }
