@@ -52,7 +52,7 @@ public class TransactionServiceTest {
         Assertions.assertEquals(transactionsBefore + 1, transactionsAfter.size());
         Assertions.assertEquals(account, transaction.account);
         Assertions.assertEquals(OperationTypes.CASH_PURCHASE.id, transaction.operationType.id);
-        Assertions.assertEquals(amount, transaction.amount);
+        Assertions.assertEquals(-amount, transaction.amount);
         Assertions.assertNotNull(transaction.eventDate);
     }
 

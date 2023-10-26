@@ -4,10 +4,10 @@ import java.util.Arrays;
 
 public enum OperationTypes {
 
-    CASH_PURCHASE(1L, "CASH PURCHASE", 1),
-    INSTALLMENT_PURCHASE(2L, "INSTALLMENT PURCHASE", 1),
+    CASH_PURCHASE(1L, "CASH PURCHASE", -1),
+    INSTALLMENT_PURCHASE(2L, "INSTALLMENT PURCHASE", -1),
     WITHDRAWAL(3L, "WITHDRAWAL", -1),
-    PAYMENT(4L, "PAYMENT", -1),
+    PAYMENT(4L, "PAYMENT", 1),
     ;
 
     public final Long id;
@@ -35,5 +35,17 @@ public enum OperationTypes {
                 .orElseThrow();
 
         return operationType.multiplier;
+    }
+
+    public static OperationTypes forId(Long operationTypeId) {
+        return Arrays
+            .stream(OperationTypes.values())
+            .filter(it -> it.id.equals(operationTypeId))
+            .findFirst()
+            .orElseThrow();
+    }
+
+    public Boolean isNegative() {
+        return this.multiplier < 0;
     }
 }

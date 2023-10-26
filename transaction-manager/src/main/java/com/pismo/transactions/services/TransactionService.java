@@ -31,13 +31,15 @@ public class TransactionService {
 
     @Transactional
     public void processTransaction(TransactionDTO transaction) {
-        final var operation = getOperationType(transaction);
         final var account = getAccount(transaction);
+        account.processTransaction(transaction);
+
+        final var operation = getOperationType(transaction);
 
         final var newTransaction = new Transaction(
-                account,
-                operation,
-                transaction.amount * operationMultiplier(transaction.operationTypeId)
+            account,
+            operation,
+            transaction.amount * operationMultiplier(transaction.operationTypeId)
         );
 
         transactionRepository.persist(newTransaction);
